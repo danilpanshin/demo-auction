@@ -36,6 +36,20 @@ pipeline {
                 }
             }
         }
+        stage("Test") {
+            parallel {
+                stage("API") {
+                    steps {
+                        sh "make api-test"
+                    }
+                }
+                stage("Front") {
+                    steps {
+                        sh "make frontend-test"
+                    }
+                }
+            }
+        }
         stage("Down") {
             steps {
                 sh "make docker-down-clear"
